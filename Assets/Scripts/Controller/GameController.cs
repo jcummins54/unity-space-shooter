@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour {
 
         if (restart) {
             if (Input.GetButton("Fire1")) {
-                SceneManager.LoadScene("02 Main");
+                SceneManager.LoadScene("01 Start");
             }
         }
     }
@@ -120,6 +120,11 @@ public class GameController : MonoBehaviour {
     IEnumerator SpawnWaves() {
         yield return new WaitForSeconds(startWait);
         while (true) {
+            if (gameOver) {
+                restartText.text = "Fire to Play Again";
+                restart = true;
+                break;
+            }
             for (int i = 0; i < hazardCount; i++) {
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = Quaternion.identity;
@@ -134,13 +139,7 @@ public class GameController : MonoBehaviour {
 
                 yield return new WaitForSeconds(Random.Range(0.1f, spawnWait));
             }
-            yield return new WaitForSeconds(waveWait);
-
-            if (gameOver) {
-                restartText.text = "Fire to Restart";
-                restart = true;
-                break;
-            }
+            yield return new WaitForSeconds(waveWait);           
         }
     }
 }

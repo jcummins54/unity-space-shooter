@@ -8,7 +8,7 @@ public class PlayerModel : AbstractModel {
 
     public static PlayerModel Factory() {
         PlayerModel instance = new PlayerModel();
-        instance.name = "Unknown" + Random.Range(0, 100);
+        instance.name = "Unknown";
         instance.score = 0;
         return instance;
     }

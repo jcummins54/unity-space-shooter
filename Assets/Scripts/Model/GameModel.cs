@@ -6,7 +6,22 @@ using System.IO;
 
 public class GameModel : MonoBehaviour {
 
-    private PlayerModel player;
+    [SerializeField] private PlayerModel player;
+
+    public string playerName {
+        get {
+            if (player == null) {
+                player = PlayerModel.Factory();
+            }
+            return player.name;
+        }
+        set {
+            if (player == null) {
+                player = PlayerModel.Factory();
+            }
+            player.name = value;
+        }
+    }
 
     public float playerScore {
         get {
@@ -42,7 +57,7 @@ public class GameModel : MonoBehaviour {
 
     void Awake() {
         if (_instance == null) {
-            LoadHighScores();           
+            LoadGameData();           
             DontDestroyOnLoad(gameObject);
             _instance = this;
         } else if (_instance != this) {
@@ -60,7 +75,7 @@ public class GameModel : MonoBehaviour {
         if (highScores == null || highScores.players.Length == 0) {
             highScores = HighScoresModel.Factory();
             highScores.players[0] = player.Clone<PlayerModel>();
-            SaveHighScores();
+            SaveGameData();
             return;
         }
         if (highScores.players.Length < 10) {
@@ -83,7 +98,7 @@ public class GameModel : MonoBehaviour {
                 break;
             }
         }
-        SaveHighScores();
+        SaveGameData();
     }
 
     public string GetHighScoreNames() {
@@ -108,6 +123,32 @@ public class GameModel : MonoBehaviour {
             text = highScores.players[0].name + "  " + highScores.players[0].score.ToString();
         }
         return text;
+    }
+
+    public void SaveGameData() {
+        SavePlayer();
+        SaveHighScores();
+    }
+
+    public void LoadGameData() {
+        LoadPlayer();
+        LoadHighScores();
+    }
+
+    public void SavePlayer() {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Create);
+        bf.Serialize(file, player);
+        file.Close();
+    }
+
+    public void LoadPlayer() {
+        if (File.Exists(Application.persistentDataPath + "/player.dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
+            player = (PlayerModel)bf.Deserialize(file);
+            file.Close();
+        }
     }
 
     public void SaveHighScores() {
