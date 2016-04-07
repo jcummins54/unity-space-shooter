@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Controller\StartController.cs" />
      <Compile Include="Assets\Scripts\Input\SimpleTouchAreaButton.cs" />
      <Compile Include="Assets\Scripts\Input\SimpleTouchPad.cs" />
+     <Compile Include="Assets\Scripts\Input\UniversalInput.cs" />
      <Compile Include="Assets\Scripts\Model\AbstractModel.cs" />
      <Compile Include="Assets\Scripts\Model\GameModel.cs" />
      <Compile Include="Assets\Scripts\Model\HighScoresModel.cs" />

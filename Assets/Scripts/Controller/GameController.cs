@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour {
         if (_instance != null) {
             return _instance;
         }
-        GameObject go = GameObject.FindWithTag("GameController");
+        GameObject go = GameObject.Find("GameController");
         if (go != null) {
             _instance = go.GetComponent<GameController>();
             return _instance;
@@ -110,11 +110,9 @@ public class GameController : MonoBehaviour {
             }
             spawnPosition.x = spawnOriginX + (i * fragOffset) - fragOffset;
             GameObject clone = Instantiate(hazard, spawnPosition, spawnRotation) as GameObject;
-            //Debug.Log(i.ToString() + " " + clone.transform.position.x.ToString());
             float asteroidScale = Random.Range(0.2f, 0.7f);
             clone.transform.localScale = new Vector3(asteroidScale, asteroidScale, asteroidScale);
         }
-        //Debug.Log("-------------------");
     }
 
     IEnumerator SpawnWaves() {

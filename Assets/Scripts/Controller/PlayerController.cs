@@ -18,26 +18,23 @@ public class PlayerController : MonoBehaviour {
     public GameObject shot;
     public GameObject shotSpawnContainer;
     public Transform[] shotSpawns;
-    public SimpleTouchPad touchPad;
-    public SimpleTouchAreaButton touchButton;
 
     private Rigidbody rb;
     private float nextFire;
     private float nextFireRefresh;
     private bool isFireRefreshing;
-    private Quaternion calibrationQuaternion;
+    private UniversalInput input;
 
     void Start() {
+        input = UniversalInput.GetInstance();
         rb = GetComponent<Rigidbody>();
         nextFire = 0.0f;
         nextFireRefresh = Time.time + fireSlowdownTime;
         isFireRefreshing = false;
-
-        CalibrateAccelerometer();
     }
 
     void Update() {
-        if (touchButton.CanFire() && Time.time > nextFire) {
+        if (input.CanFire() && Time.time > nextFire) {
             if (isFireRefreshing) {
                 nextFire = Time.time + slowFireRate;
             }
@@ -58,7 +55,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if (!touchButton.CanFire()) {
+        if (!input.CanFire()) {
             if (Time.time > nextFireRefresh) {
                 isFireRefreshing = false;
             }
@@ -69,17 +66,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        /*
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-
-        /*
-        Vector3 acceleration = FixAcceleration(Input.acceleration);
-        Vector3 movement = new Vector3(acceleration.x, 0.0f, acceleration.y);
-        */
-
-        Vector2 direction = touchPad.GetDirection ();
+        Vector2 direction = input.GetDirection ();
         Vector3 movement = new Vector3 (direction.x, 0.0f, direction.y);
 
         rb.velocity = movement * speed;
@@ -93,16 +80,5 @@ public class PlayerController : MonoBehaviour {
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
         //Rotate shotSpawns opposite to ship rotation so shots do not leave the Y axis of the Boundary
         shotSpawnContainer.transform.rotation = Quaternion.Euler(rb.rotation.x, rb.rotation.y, -rb.rotation.z);
-    }
-
-    Vector3 FixAcceleration(Vector3 acceleration) {
-        Vector3 fixedAcceleration = calibrationQuaternion * acceleration;
-        return fixedAcceleration;
-    }
-
-    void CalibrateAccelerometer() {
-        Vector3 accelerationSnapshot = Input.acceleration;
-        Quaternion rotateQuaternion = Quaternion.FromToRotation(new Vector3(0.0f, 0.0f, -1.0f), accelerationSnapshot);
-        calibrationQuaternion = Quaternion.Inverse(rotateQuaternion);
     }
 }

@@ -46,7 +46,7 @@ public class GameModel : MonoBehaviour {
         if (_instance != null) {
             return _instance;
         }
-        GameObject go = GameObject.FindWithTag("GameModel");
+        GameObject go = GameObject.Find("GameModel");
         if (go != null) {
             _instance = go.GetComponent<GameModel>();
             return _instance;
@@ -65,7 +65,6 @@ public class GameModel : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
     void Start() {
         DontDestroyOnLoad(gameObject);
     }
