@@ -110,6 +110,7 @@ public class DynamoDbObject : MonoBehaviour {
         QueryRequest request = new QueryRequest {
             TableName = "UnityHighScores",
             IndexName = "GameTitle-Score-index",
+            Limit = 10,
             KeyConditions = new Dictionary<string, Condition>() {
                 {
                     "GameTitle",
