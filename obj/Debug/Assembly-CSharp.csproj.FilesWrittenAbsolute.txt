@@ -15,3 +15,7 @@
 /Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/AWSSDK.CognitoIdentity.dll
+/Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/AWSSDK.Core.dll
+/Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/AWSSDK.DynamoDBv2.dll
+/Users/jeremy/Projects/Space Shooter Tutorial/Temp/bin/Debug/AWSSDK.SecurityToken.dll

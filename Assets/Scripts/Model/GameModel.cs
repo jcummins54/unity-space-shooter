@@ -131,7 +131,7 @@ public class GameModel : MonoBehaviour {
 
     public void LoadGameData() {
         LoadPlayer();
-        LoadHighScores();
+        //LoadHighScores();
     }
 
     public void SavePlayer() {

@@ -15,18 +15,26 @@ public class StartController : MonoBehaviour {
     void Start() {
         scoreText.text = GameModel.GetInstance().playerScore.ToString();
         nameInput.text = GameModel.GetInstance().playerName;
-        highScoreText.text = GameModel.GetInstance().GetHighScore();
-        highScoreNames.text = GameModel.GetInstance().GetHighScoreNames();
-        highScoreScores.text = GameModel.GetInstance().GetHighScoreScores();
+        RefreshHighScores();
         startButton.onClick.AddListener(delegate {
                 BeginGame();
             });
+    }
+
+    void OnEnable() {
+        DynamoDbObject.OnHighScoresLoaded += RefreshHighScores;
     }
 
     void Update() {
         if (Input.GetKey(KeyCode.Escape)) {
             Application.Quit();
         }
+    }
+
+    public void RefreshHighScores() {
+        highScoreText.text = GameModel.GetInstance().GetHighScore();
+        highScoreNames.text = GameModel.GetInstance().GetHighScoreNames();
+        highScoreScores.text = GameModel.GetInstance().GetHighScoreScores();
     }
 
     public void BeginGame() {

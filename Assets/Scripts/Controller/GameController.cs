@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour {
     public void GameOver() {
         gameOverText.text = "Game Over!";
         gameOver = true;
+        DynamoDbObject.GetInstance().SavePlayer();
         UpdateHighScores();
     }
 
